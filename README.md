@@ -1,5 +1,7 @@
 LFS Server Go\!
 ======
+[![Build Status](https://travis-ci.org/unixworld/lfs-server-go.svg?branch=mysql_store)](https://travis-ci.org/unixworld/lfs-server-go)
+
 # NOT yet ready for primetime and is going through some iterations, specifically regarding access control.
 
 [lfs]: https://github.com/github/git-lfs
