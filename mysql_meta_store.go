@@ -75,12 +75,14 @@ func (m *MySQLMetaStore) mapOid(id int64) ([]string, error) {
 
 	if err != nil {
 		logger.Log(kv{"fn": "findProject", "msg": fmt.Sprintf("Oid not found %s", err)})
+		return nil, err
 	}
 
 	for rows.Next() {
 		err := rows.Scan(&oid)
 		if err != nil {
 			logger.Log(kv{"fn": "findProject", "msg": err})
+			return nil, err
 		}
 		oidList = append(oidList, oid)
 	}
