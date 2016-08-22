@@ -1,0 +1,36 @@
+language: go
+
+go:
+  - 1.6.3
+
+install:
+  - go get -u github.com/golang/lint/golint
+  - go get golang.org/x/sys/unix
+  - go get github.com/tools/godep
+  - go get github.com/bmizerany/assert
+  - go get github.com/client9/misspell/cmd/misspell
+  - go get github.com/stripe/safesql
+  - go get github.com/kisielk/errcheck
+  - go get github.com/gordonklaus/ineffassign
+  - go get honnef.co/go/staticcheck/cmd/staticcheck
+  - go get github.com/mvdan/interfacer/cmd/interfacer
+  - go get honnef.co/go/unused/cmd/unused
+  - go get honnef.co/go/simple/cmd/gosimple
+  - go get github.com/mdempsky/unconvert
+  - cd "${TRAVIS_BUILD_DIR}"; godep get;
+  - cd "${TRAVIS_BUILD_DIR}/test_ldap_server"; go build; cd -
+
+script:
+  - find "${TRAVIS_BUILD_DIR}" -type f \( ! -iname "*test.go" \) | xargs misspell -error
+  - safesql -q ./.. 
+  - ineffassign ./..
+  - errcheck ./...
+  - go vet .
+  - go tool vet --shadow ./..
+  - go tool vet -printf -printfuncs="Infof,Warnf,Errorf,Fatalf,Infoln,Warnln,Errorln,Fatalln" ./..
+  - staticcheck ./...
+  - gosimple ./...
+  - unconvert  ./...
+  - interfacer ./...
+  - go test ./...
+  - golint ./...
