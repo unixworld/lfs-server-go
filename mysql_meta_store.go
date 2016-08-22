@@ -12,7 +12,7 @@ import (
 )
 
 /*
-MySQLMetaStore struct
+MySQLMetaStore struct.
 */
 type MySQLMetaStore struct {
 	mysqlService *MySQLService
